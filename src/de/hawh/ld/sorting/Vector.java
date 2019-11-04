@@ -1,31 +1,27 @@
 package de.hawh.ld.sorting;
 
 
+import edu.princeton.cs.algs4.StdRandom;
+
 import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Comparator;
 
-public class Vector implements Serializable {
 
-    public static final Vector vector = new Vector(0.0, 0.0, 0.0);
 
-    private static final long sID = 1_231_123_123_545_472L;
+public class Vector {
+
+
     private int d;               // dimension of the vector
     private double[] data;       // array of vector's components
 
-    public class distComparator implements Comparator<Vector> {
+//    @Override
+//    public int compareTo(Vector v) {
+//        Vector vector = new Vector(0.0, 0.0, 0.0);
+//        return Double.compare(this.distanceTo(vector), v.distanceTo(vector));
+//    }
 
-        @Override
-        public int compare(Vector i, Vector j){
-            if(i.distanceTo2(vector)<j.distanceTo2(vector)){
-                return -1;
-            }
-            if(i.distanceTo2(vector)>j.distanceTo2(vector)){
-                return 1;
-            }
-            return 0;
-        }
-    }
+
 
     /**
      * Initializes a d-dimensional zero vector.
@@ -60,8 +56,8 @@ public class Vector implements Serializable {
      * @return the Euclidean distance between this vector and that vector
      * @throws IllegalArgumentException if the dimensions of the two vectors are not equal
      */
-    public double distanceTo2(Vector that) {
-        if (this.d != that.d) throw new IllegalArgumentException("Dimensions don't agree");
+    public double distanceTo(Vector that) {
+        if (this.d != that.d) throw new IllegalArgumentException("Dimensions don't match");
         double sum = 0.0;
         for (int i = 0; i < this.d ; i++) {
             sum = sum + ((that.data[i] - this.data[i]) * (that.data[i] - this.data[i]));
@@ -87,19 +83,31 @@ public class Vector implements Serializable {
 
 
     public static void main(String[] args) {
-
-
-        Vector v1 = new Vector(1.0, 32.0283, 4234, 234.234);
-        Vector v2 = new Vector(3.0, 3.232, 234234.324, 43274.98);
-        Vector v3 = new Vector(641.0, 2233.232, 2374, 49023.98);
-        Vector v4 = new Vector(3562.0283, 283.23223, 987.3874893, 387493.9304729);
-
-        Vector vn[] = {v1, v2, v3, v4};
-
-        for (int i = 0; i < vn.length; i++) {
-            System.out.println(v1.distanceTo2(vn[i]));
+        Vector v1 = new Vector(0.0, 0.0, 0.0, 0.0);
+        long n = 26_000_000L;
+        int m = 10;
+        MinPQ<Vector> vectorPQ = new MinPQ<>(10, new SortByDistance());
+        //Vector[] vn = new Vector[n];
+        for (int i = 0; i < n ; i++) {
+            Vector v = new Vector(StdRandom.uniform(-1000.0, 1000.0),
+                                  StdRandom.uniform(-1000.0, 1000.0),
+                                  StdRandom.uniform(-1000.0, 1000.0),
+                                  StdRandom.uniform(-1000.0, 1000.0));
+            vectorPQ.insert(v);
+           // System.out.println(v.distanceTo(v1));
         }
 
+//
+//        Vector v1 = new Vector(1.0, 32.0283, 4234, 234.234);
+//        Vector v2 = new Vector(3.0, 3.232, 234234.324, 43274.98);
+//        Vector v3 = new Vector(641.0, 2233.232, 2374, 49023.98);
+//        Vector v4 = new Vector(3562.0283, 283.23223, 987.3874893, 387493.9304729);
+
+        System.out.println("=================================");
+
+        for (int i = 0; i < m ; i++) {
+            System.out.println(vectorPQ.delMin().distanceTo(v1));
+        }
     }
 
 }

@@ -49,7 +49,7 @@ public class QuickXM5 {
         // StdRandom.shuffle(a);
         sort(a, 0, a.length - 1);
         assert isSorted(a);
-        System.out.println(Arrays.toString(a));
+        //System.out.println(Arrays.toString(a));
     }
 
     // quicksort the subarray from a[lo] to a[hi]
@@ -99,7 +99,7 @@ public class QuickXM5 {
 
         // put partitioning item v at a[j]
         exch(a, lo, j);
-        System.out.println(Arrays.toString(a));
+        //System.out.println(Arrays.toString(a));
 
         // now, a[lo .. j-1] <= a[j] <= a[j+1 .. hi]
         return j;
@@ -166,18 +166,18 @@ public class QuickXM5 {
      * @param args the command-line arguments
      */
     public static void main(String[] args) {
-//        String[] a = StdIn.readAllStrings();
-//        QuickXM5.sort(a);
-//        assert isSorted(a);
-//        show(a);
-        int n = 45;
-        Integer[] intArr = new Integer[n];
-        for (int i = 0; i < n; i++) {
-            intArr[i] = StdRandom.uniform(100);
-        }
-
-        System.out.println(Arrays.toString(intArr));
-        QuickXM5.sort(intArr);
+        String[] a = StdIn.readAllStrings();
+        QuickXM5.sort(a);
+        assert isSorted(a);
+        show(a);
+//        int n = 45;
+//        Integer[] intArr = new Integer[n];
+//        for (int i = 0; i < n; i++) {
+//            intArr[i] = StdRandom.uniform(100);
+//        }
+//
+//        System.out.println(Arrays.toString(intArr));
+//        QuickXM5.sort(intArr);
 
 
 
