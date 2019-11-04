@@ -34,8 +34,8 @@ public class SortCompare {
     public static void main(String[] args) {
         String alg1 = "QuickX"; //args[0];
         String alg2 = "QuickXM5"; //args[1];
-        int N = 10000; //Integer.parseInt(args[2]);
-        int T = 10000; //Integer.parseInt(args[3]);
+        int N = 100000; //Integer.parseInt(args[2]);
+        int T = 100; //Integer.parseInt(args[3]);
         double t1 = timeRandomInput(alg1, N, T);
         double t2 = timeRandomInput(alg2, N, T);
         StdOut.printf("For %d random Doubles\n    %s is", N, alg1);

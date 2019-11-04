@@ -5,17 +5,22 @@ import edu.princeton.cs.algs4.QuickX;
 
 import java.util.Arrays;
 
+
+//Sorts a k near sorted array in N log k time - hopefully
+
 public  class KNearSort {
     
     public static void sort(Comparable[] a, int k ){
         int lo = 0;
         int hi = 2 * k;
 
+
+        //do while a is not completely sorted
         while (!isSorted(a)){
             if(hi > a.length - 1) hi = a.length - 1;
 
 
-            // Temporary array
+            // Temporary array with lo..hi elements from the original array.
             Comparable[] tmp = new Comparable[hi - lo + 1];
             int j = 0;
             for (int i = lo; i <= hi; i++) {

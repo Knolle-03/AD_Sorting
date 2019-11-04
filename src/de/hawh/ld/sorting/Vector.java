@@ -1,12 +1,8 @@
 package de.hawh.ld.sorting;
 
-
+import edu.princeton.cs.algs4.MinPQ;
 import edu.princeton.cs.algs4.StdRandom;
-
-import java.io.Serializable;
 import java.util.Arrays;
-import java.util.Comparator;
-
 
 
 public class Vector {
@@ -67,10 +63,7 @@ public class Vector {
 
     @Override
     public String toString() {
-        return "Vector{" +
-                "d=" + d +
-                ", data=" + Arrays.toString(data) +
-                '}';
+        return d + " dimensional Vector: " + Arrays.toString(data);
     }
 
     public int getDimension() {
@@ -84,7 +77,7 @@ public class Vector {
 
     public static void main(String[] args) {
         Vector v1 = new Vector(0.0, 0.0, 0.0, 0.0);
-        long n = 26_000_000L;
+        long n = 26_556_000L;
         int m = 10;
         MinPQ<Vector> vectorPQ = new MinPQ<>(10, new SortByDistance());
         //Vector[] vn = new Vector[n];
@@ -96,6 +89,9 @@ public class Vector {
             vectorPQ.insert(v);
            // System.out.println(v.distanceTo(v1));
         }
+        double[] lol = {0.0,0.1,0.2,0.3};
+        Vector bla = new Vector(lol);
+        System.out.println(bla.toString());
 
 //
 //        Vector v1 = new Vector(1.0, 32.0283, 4234, 234.234);
@@ -106,6 +102,7 @@ public class Vector {
         System.out.println("=================================");
 
         for (int i = 0; i < m ; i++) {
+            System.out.println(vectorPQ.min());
             System.out.println(vectorPQ.delMin().distanceTo(v1));
         }
     }
