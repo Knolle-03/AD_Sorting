@@ -1,15 +1,8 @@
 package de.hawh.ld.sorting;
 
-
+import edu.princeton.cs.algs4.MinPQ;
 import edu.princeton.cs.algs4.StdRandom;
-
-import java.io.*;
 import java.util.Arrays;
-import java.util.Comparator;
-import java.util.Locale;
-import java.util.Scanner;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 
 public class Vector {
@@ -70,10 +63,7 @@ public class Vector {
 
     @Override
     public String toString() {
-        return "Vector{" +
-                "d=" + d +
-                ", data=" + Arrays.toString(data) +
-                '}';
+        return d + " dimensional Vector: " + Arrays.toString(data);
     }
 
     public int getDimension() {
@@ -86,19 +76,22 @@ public class Vector {
 
 
     public static void main(String[] args) {
-//        Vector v1 = new Vector(0.0, 0.0, 0.0, 0.0);
-//        long n = 26_000_000L;
-//        int m = 10;
-//        MinPQ<Vector> vectorPQ = new MinPQ<>(10, new SortByDistance());
-//        //Vector[] vn = new Vector[n];
-//        for (int i = 0; i < n ; i++) {
-//            Vector v = new Vector(StdRandom.uniform(-1000.0, 1000.0),
-//                                  StdRandom.uniform(-1000.0, 1000.0),
-//                                  StdRandom.uniform(-1000.0, 1000.0),
-//                                  StdRandom.uniform(-1000.0, 1000.0));
-//            vectorPQ.insert(v);
-//           // System.out.println(v.distanceTo(v1));
-//        }
+        Vector v1 = new Vector(0.0, 0.0, 0.0, 0.0);
+        long n = 26_556_000L;
+        int m = 10;
+        MinPQ<Vector> vectorPQ = new MinPQ<>(10, new SortByDistance());
+        //Vector[] vn = new Vector[n];
+        for (int i = 0; i < n ; i++) {
+            Vector v = new Vector(StdRandom.uniform(-1000.0, 1000.0),
+                                  StdRandom.uniform(-1000.0, 1000.0),
+                                  StdRandom.uniform(-1000.0, 1000.0),
+                                  StdRandom.uniform(-1000.0, 1000.0));
+            vectorPQ.insert(v);
+           // System.out.println(v.distanceTo(v1));
+        }
+        double[] lol = {0.0,0.1,0.2,0.3};
+        Vector bla = new Vector(lol);
+        System.out.println(bla.toString());
 
 //
 //        Vector v1 = new Vector(1.0, 32.0283, 4234, 234.234);
@@ -106,11 +99,12 @@ public class Vector {
 //        Vector v3 = new Vector(641.0, 2233.232, 2374, 49023.98);
 //        Vector v4 = new Vector(3562.0283, 283.23223, 987.3874893, 387493.9304729);
 
-//        System.out.println("=================================");
-//
-//        for (int i = 0; i < m ; i++) {
-//            System.out.println(vectorPQ.delMin().distanceTo(v1));
-//        }
+        System.out.println("=================================");
 
+        for (int i = 0; i < m ; i++) {
+            System.out.println(vectorPQ.min());
+            System.out.println(vectorPQ.delMin().distanceTo(v1));
+        }
     }
+
 }
