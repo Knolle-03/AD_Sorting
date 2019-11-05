@@ -1,5 +1,6 @@
 package de.hawh.ld.sorting;
 
+import edu.princeton.cs.algs4.MinPQ;
 import edu.princeton.cs.algs4.StdRandom;
 
 import java.io.File;
@@ -34,7 +35,7 @@ public class TestADT {
 
         try (Scanner sc = new Scanner(new File(filename)).useDelimiter(Pattern.compile("[A-Za-z,=\\[\\]{}]*"))) {
 
-            vectors = new MinPQ<>();
+            vectors = new MinPQ<>(new SortByDistance());
             Pattern p = Pattern.compile("(\\d+(?:\\.\\d+))");
 
             while (sc.hasNextLine()) {
@@ -48,7 +49,7 @@ public class TestADT {
                     }
                     Vector vec = new Vector(tmp);
                     vectors.insert(vec);
-                    System.out.println(vec);
+                    //System.out.println(vec);
                 }
             }
         } catch (FileNotFoundException e) {
@@ -66,7 +67,15 @@ public class TestADT {
     }
 
     public static void main(String[] args) {
+        //createVectorList(5000, "vectors.txt");
         TestADT test = new TestADT();
         test.readVectorList("vectors.txt");
+
+        for (int i = 0; i < 10 ; i++) {
+            //System.out.println(test.getVectors().min());
+            System.out.println(test.getVectors().delMin().distanceTo(new Vector(0.0,0.0,0.0,0.0)));
+
+        }
+
     }
 }
