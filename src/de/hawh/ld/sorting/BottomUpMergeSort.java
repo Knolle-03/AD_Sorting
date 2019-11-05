@@ -66,25 +66,25 @@ public class BottomUpMergeSort {
 //        testData(nums2);
 
 
-        int n = 1;
-
-        for (int j = 1 ; j < 15 ; j++ ) {
-
-
-            // reversed array
-
-            Integer[] nums = new Integer[n];
-
-            for (int i = 0; i < n ; i++) {
-                nums[i] = nums.length - i;
-            }
-            MergeBottomUpQueue.sort(nums);
-            System.out.println("n is: " + n + " array accesses: " + arrayAccesses + "  ratio: " + arrayAccesses/n);
-
-
-
-            n *= 2;
-        }
+//        int n = 1;
+//
+//        for (int j = 1 ; j < 15 ; j++ ) {
+//
+//
+//            // reversed array
+//
+//            Integer[] nums = new Integer[n];
+//
+//            for (int i = 0; i < n ; i++) {
+//                nums[i] = nums.length - i;
+//            }
+//            MergeBottomUpQueue.sort(nums);
+//            System.out.println("n is: " + n + " array accesses: " + arrayAccesses + "  ratio: " + arrayAccesses/n);
+//
+//
+//
+//            n *= 2;
+//        }
     }
 
 

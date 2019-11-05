@@ -32,14 +32,13 @@ public class Vector {
     /**
      * Initializes a vector from either an array or a vararg list.
      * The vararg syntax supports a constructor that takes a variable number of
-     * arugments such as Vector x = new Vector(1.0, 2.0, 3.0, 4.0).
+     * arguments such as Vector x = new Vector(1.0, 2.0, 3.0, 4.0).
      *
      * @param a the array or vararg list
      */
     public Vector(double ... a) {
         d = a.length;
 
-        // defensive copy so that client can't alter our copy of data[]
         data = new double[d];
         for (int i = 0; i < d; i++)
             data[i] = a[i];
@@ -56,7 +55,7 @@ public class Vector {
         if (this.d != that.d) throw new IllegalArgumentException("Dimensions don't match");
         double sum = 0.0;
         for (int i = 0; i < this.d ; i++) {
-            sum = sum + ((that.data[i] - this.data[i]) * (that.data[i] - this.data[i]));
+            sum = sum + (Math.pow((that.data[i] - this.data[i]), 2));// * (that.data[i] - this.data[i]));
         }
         return Math.sqrt(sum);
     }

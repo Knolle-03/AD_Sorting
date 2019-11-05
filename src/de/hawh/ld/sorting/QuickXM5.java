@@ -36,7 +36,7 @@ import java.util.Arrays;
 public class QuickXM5 {
 
     // cutoff to insertion sort, must be >= 1
-    private static final int INSERTION_SORT_CUTOFF = 8;
+    private static final int INSERTION_SORT_CUTOFF = 4;
 
     // This class should not be instantiated.
     private QuickXM5() { }
@@ -59,8 +59,11 @@ public class QuickXM5 {
         // cutoff to insertion sort (Insertion.sort() uses half-open intervals)
         int n = hi - lo + 1;
         if (n <= INSERTION_SORT_CUTOFF) {
-            Insertion.sort(a, lo, hi + 1);
+            // for k sorted arrays - remove if full quick sort should pass.
             return;
+
+//            Insertion.sort(a, lo, hi + 1);
+//            return;
         }
 
         int j = partition(a, lo, hi);
@@ -166,18 +169,18 @@ public class QuickXM5 {
      * @param args the command-line arguments
      */
     public static void main(String[] args) {
-        String[] a = StdIn.readAllStrings();
-        QuickXM5.sort(a);
-        assert isSorted(a);
-        show(a);
-//        int n = 45;
-//        Integer[] intArr = new Integer[n];
-//        for (int i = 0; i < n; i++) {
-//            intArr[i] = StdRandom.uniform(100);
-//        }
-//
-//        System.out.println(Arrays.toString(intArr));
-//        QuickXM5.sort(intArr);
+//        String[] a = StdIn.readAllStrings();
+//        QuickXM5.sort(a);
+//        assert isSorted(a);
+//        show(a);
+        int n = 45;
+        Double[] doubleArray = new Double[n];
+        for (int i = 0; i < n; i++) {
+            doubleArray[i] = StdRandom.uniform(0.0, 1.0);
+        }
+
+        //System.out.println(Arrays.toString(intArr));
+        QuickXM5.sort(doubleArray);
 
 
 

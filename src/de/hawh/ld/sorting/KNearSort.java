@@ -17,7 +17,6 @@ public  class KNearSort {
 
 
         // insert first k + 1 element in the pq.
-        // (k operations)
         for (int i = 0; i < k + 1 ; i++) {
             pq.insert(a[i]);
         }
