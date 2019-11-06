@@ -79,9 +79,7 @@ public class Vector {
                                   StdRandom.uniform(-1000.0, 1000.0));
             vectorPQ.insert(v);
         }
-        double[] lol = {0.0,0.1,0.2,0.3};
-        Vector bla = new Vector(lol);
-        System.out.println(bla.toString());
+
 
 
         System.out.println("=================================");
