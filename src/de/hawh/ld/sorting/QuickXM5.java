@@ -36,7 +36,7 @@ import java.util.Arrays;
 public class QuickXM5 {
 
     // cutoff to insertion sort, must be >= 1
-    private static final int INSERTION_SORT_CUTOFF = 4;
+    private static final int INSERTION_SORT_CUTOFF = 8;
 
     // This class should not be instantiated.
     private QuickXM5() { }
@@ -59,11 +59,8 @@ public class QuickXM5 {
         // cutoff to insertion sort (Insertion.sort() uses half-open intervals)
         int n = hi - lo + 1;
         if (n <= INSERTION_SORT_CUTOFF) {
-            // for k sorted arrays - remove if full quick sort should pass.
+            Insertion.sort(a, lo, hi + 1);
             return;
-
-//            Insertion.sort(a, lo, hi + 1);
-//            return;
         }
 
         int j = partition(a, lo, hi);
@@ -102,7 +99,7 @@ public class QuickXM5 {
 
         // put partitioning item v at a[j]
         exch(a, lo, j);
-        //System.out.println(Arrays.toString(a));
+        System.out.println(Arrays.toString(a));
 
         // now, a[lo .. j-1] <= a[j] <= a[j+1 .. hi]
         return j;
@@ -116,6 +113,7 @@ public class QuickXM5 {
     }
 
 
+    // return the index of the median element among a[i], a[j], a[k], a[l] and a[m]
     private static int median5(Comparable[] a, int i, int j, int k, int l, int m) {
         Comparable[] arr = {a[i], a[j], a[k], a[l], a[m]};
         Arrays.sort(arr);
@@ -169,18 +167,18 @@ public class QuickXM5 {
      * @param args the command-line arguments
      */
     public static void main(String[] args) {
-//        String[] a = StdIn.readAllStrings();
-//        QuickXM5.sort(a);
-//        assert isSorted(a);
-//        show(a);
-        int n = 45;
-        Double[] doubleArray = new Double[n];
-        for (int i = 0; i < n; i++) {
-            doubleArray[i] = StdRandom.uniform(0.0, 1.0);
-        }
-
-        //System.out.println(Arrays.toString(intArr));
-        QuickXM5.sort(doubleArray);
+        String[] a = StdIn.readAllStrings();
+        QuickXM5.sort(a);
+        assert isSorted(a);
+        show(a);
+//        int n = 45;
+//        Double[] doubleArray = new Double[n];
+//        for (int i = 0; i < n; i++) {
+//            doubleArray[i] = StdRandom.uniform(0.0, 1.0);
+//        }
+//
+//        //System.out.println(Arrays.toString(intArr));
+//        QuickXM5.sort(doubleArray);
 
 
 
