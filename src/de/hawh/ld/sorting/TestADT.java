@@ -11,10 +11,17 @@ import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * Provides methods to create a file with random vectors (4 dimensions) and
+ * reading those files, creating a MinPQ of vectors.
+ */
 public class TestADT {
 
-    private MinPQ<Vector> vectors;
-
+    /**
+     * Creates a file of vectors with 4 dimensions
+     * @param n number of vectors to write in file
+     * @param filename name of file
+     */
     public static void createVectorList(int n, String filename) {
         filename = filename.equals("") ? "vectors.txt" : filename;
 
@@ -31,49 +38,53 @@ public class TestADT {
         }
     }
 
-    public void readVectorList(String filename) {
+    /**
+     * Reads a file of vectors and returns a MinPQ of those vectors
+     * @param filename name of the file to read the vectors from
+     * @return  a priority queue of the read vectors
+     * @throws FileNotFoundException if file doesn't exist or cannot be read
+     */
+    public static MinPQ<Vector> readVectorList(String filename) throws FileNotFoundException {
 
-        try (Scanner sc = new Scanner(new File(filename)).useDelimiter(Pattern.compile("[A-Za-z,=\\[\\]{}]*"))) {
+        Scanner sc = new Scanner(new File(filename)).useDelimiter(Pattern.compile("[A-Za-z,=\\[\\]{}]*"));
 
-            vectors = new MinPQ<>(new SortByDistance());
-            Pattern p = Pattern.compile("(\\d+(?:\\.\\d+))");
+        MinPQ<Vector> vectors = new MinPQ<>(new SortByDistance());
+        Pattern p = Pattern.compile("(\\d+(?:\\.\\d+))");
 
-            while (sc.hasNextLine()) {
-                if (sc.hasNextInt()) {
-                    int dimension = sc.nextInt();
-                    double[] tmp = new double[dimension];
-                    Matcher m = p.matcher(sc.nextLine());
+        while (sc.hasNextLine()) {
+            if (sc.hasNextInt()) {
+                int dimension = sc.nextInt();
+                double[] tmp = new double[dimension];
+                Matcher m = p.matcher(sc.nextLine());
 
-                    for (int i = 0; i < dimension; i++) {
-                        if (m.find()) tmp[i] = Double.parseDouble(m.group(1));
-                    }
-                    Vector vec = new Vector(tmp);
-                    vectors.insert(vec);
-                    //System.out.println(vec);
+                for (int i = 0; i < dimension; i++) {
+                    if (m.find()) tmp[i] = Double.parseDouble(m.group(1));
                 }
+                vectors.insert(new Vector(tmp));
             }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
         }
-
-    }
-
-    public MinPQ<Vector> getVectors() {
         return vectors;
     }
 
-    public void setVectors(MinPQ<Vector> vectors) {
-        this.vectors = vectors;
-    }
-
+    /**
+     * Creates a file of random vectors, reads them to a prioritized queue and prints them in order of
+     * their distance to the given vector
+     * @param args
+     */
     public static void main(String[] args) {
         //createVectorList(5000, "vectors.txt");
-        TestADT test = new TestADT();
-        test.readVectorList("vectors.txt");
+
+        MinPQ<Vector> vectors = null;
+        try {
+            vectors = TestADT.readVectorList("vectors.txt");
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+            vectors = new MinPQ<Vector>(new SortByDistance());
+        }
 
         for (int i = 0; i < 10 ; i++) {
             //System.out.println(test.getVectors().min());
-            System.out.println(test.getVectors().delMin().distanceTo(new Vector(0.0,0.0,0.0,0.0)));
+            System.out.println(vectors.delMin().distanceTo(new Vector(0.0,0.0,0.0,0.0)));
 
         }
 

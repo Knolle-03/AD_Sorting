@@ -7,6 +7,12 @@ import edu.princeton.cs.algs4.*;
 
 public class SortCompare {
 
+    /**
+     * Runs a timed sorting of an collection using the chosen algorithm.
+     * @param alg algorithm to use for sorting
+     * @param a collection to be sorted
+     * @return time needed to sort
+     */
     public static double time(String alg, Comparable[] a) {
         Stopwatch timer = new Stopwatch();
         if (alg.equals("Insertion")) Insertion.sort(a);
@@ -20,6 +26,13 @@ public class SortCompare {
         return timer.elapsedTime();
     }
 
+    /**
+     * Times the sorting of a specified array a given amount of times.
+     * @param alg algorithm to sort by
+     * @param N length of random array
+     * @param T amount of random arrays to sort
+     * @return time needed to sort all arrays
+     */
     public static double timeRandomInput(String alg, int N, int T)   {
 
         double total = 0.0;
@@ -32,6 +45,10 @@ public class SortCompare {
         return total;
     }
 
+    /**
+     * Compares the time two algorithms need to each sort T random arrays of length N and prints the result
+     * @param args
+     */
     public static void main(String[] args) {
         String alg1 = "QuickXM5"; //args[0];
         String alg2 = "MergeBU";  //args[1];
