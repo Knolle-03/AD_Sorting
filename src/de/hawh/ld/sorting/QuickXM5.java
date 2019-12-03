@@ -12,10 +12,7 @@
 
 package de.hawh.ld.sorting;
 
-import edu.princeton.cs.algs4.Insertion;
-import edu.princeton.cs.algs4.StdIn;
-import edu.princeton.cs.algs4.StdOut;
-import edu.princeton.cs.algs4.StdRandom;
+import edu.princeton.cs.algs4.*;
 
 import java.util.Arrays;
 
@@ -115,7 +112,7 @@ public class QuickXM5 {
 
     private static int median5(Comparable[] a, int i, int j, int k, int l, int m) {
         Comparable[] arr = {a[i], a[j], a[k], a[l], a[m]};
-        Arrays.sort(arr);
+        Insertion.sort(arr);
 
         if      (arr[2] == a[i]) return i;
         else if (arr[2] == a[j]) return j;
