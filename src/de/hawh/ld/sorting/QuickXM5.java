@@ -96,7 +96,7 @@ public class QuickXM5 {
 
         // put partitioning item v at a[j]
         exch(a, lo, j);
-        //System.out.println(Arrays.toString(a));
+        System.out.println(Arrays.toString(a));
 
         // now, a[lo .. j-1] <= a[j] <= a[j+1 .. hi]
         return j;
@@ -110,6 +110,7 @@ public class QuickXM5 {
     }
 
 
+    // return the index of the median element among a[i], a[j], a[k], a[l] and a[m]
     private static int median5(Comparable[] a, int i, int j, int k, int l, int m) {
         Comparable[] arr = {a[i], a[j], a[k], a[l], a[m]};
         Insertion.sort(arr);
@@ -168,13 +169,13 @@ public class QuickXM5 {
         assert isSorted(a);
         show(a);
 //        int n = 45;
-//        Integer[] intArr = new Integer[n];
+//        Double[] doubleArray = new Double[n];
 //        for (int i = 0; i < n; i++) {
-//            intArr[i] = StdRandom.uniform(100);
+//            doubleArray[i] = StdRandom.uniform(0.0, 1.0);
 //        }
 //
-//        System.out.println(Arrays.toString(intArr));
-//        QuickXM5.sort(intArr);
+//        //System.out.println(Arrays.toString(intArr));
+//        QuickXM5.sort(doubleArray);
 
 
 

@@ -4,8 +4,15 @@ package de.hawh.ld.sorting;
 import edu.princeton.cs.algs4.*;
 
 
+
 public class SortCompare {
 
+    /**
+     * Runs a timed sorting of an collection using the chosen algorithm.
+     * @param alg algorithm to use for sorting
+     * @param a collection to be sorted
+     * @return time needed to sort
+     */
     public static double time(String alg, Comparable[] a) {
         Stopwatch timer = new Stopwatch();
         if (alg.equals("Insertion")) Insertion.sort(a);
@@ -19,6 +26,13 @@ public class SortCompare {
         return timer.elapsedTime();
     }
 
+    /**
+     * Times the sorting of a specified array a given amount of times.
+     * @param alg algorithm to sort by
+     * @param N length of random array
+     * @param T amount of random arrays to sort
+     * @return time needed to sort all arrays
+     */
     public static double timeRandomInput(String alg, int N, int T)   {
 
         double total = 0.0;
@@ -31,17 +45,27 @@ public class SortCompare {
         return total;
     }
 
+    /**
+     * Compares the time two algorithms need to each sort T random arrays of length N and prints the result
+     * @param args
+     */
     public static void main(String[] args) {
         String alg1 = "QuickX"; //args[0];
         String alg2 = "QuickXM5"; //args[1];
-        int N = 26_500_000; //Integer.parseInt(args[2]);
-        int T = 10; //Integer.parseInt(args[3]);
+        int N = 100000; //Integer.parseInt(args[2]);
+        int T = 100; //Integer.parseInt(args[3]);
         double t1 = timeRandomInput(alg1, N, T);
         double t2 = timeRandomInput(alg2, N, T);
+        if(alg1.equals("Merge") || alg2.equals("Merge")){
+            System.out.println("Merge   arrayAccesses: " + Merge.arrayAccesses + " ratio: " + Merge.arrayAccesses/N);
+        }
+        if(alg1.equals("MergeBU") || alg2.equals("MergeBU")){
+            System.out.println("MergeBU arrayAccesses: " + MergeBU.arrayAccesses + " ratio: " + MergeBU.arrayAccesses/N);
+        }
 
         StdOut.printf("QuickX : %.5f \nQuickXM5 : %.5f\n" , t1, t2);
         StdOut.printf("For %d random Doubles\n    %s is", N, alg1);
-        StdOut.printf(" %.5f times faster than %s\n", t2/t1, alg2);
+        StdOut.printf(" %.1f times faster than %s\n", t2/t1, alg2);
     }
 }
 

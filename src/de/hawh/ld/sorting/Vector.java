@@ -11,14 +11,6 @@ public class Vector {
     private int d;               // dimension of the vector
     private double[] data;       // array of vector's components
 
-//    @Override
-//    public int compareTo(Vector v) {
-//        Vector vector = new Vector(0.0, 0.0, 0.0);
-//        return Double.compare(this.distanceTo(vector), v.distanceTo(vector));
-//    }
-
-
-
     /**
      * Initializes a d-dimensional zero vector.
      *
@@ -32,14 +24,13 @@ public class Vector {
     /**
      * Initializes a vector from either an array or a vararg list.
      * The vararg syntax supports a constructor that takes a variable number of
-     * arugments such as Vector x = new Vector(1.0, 2.0, 3.0, 4.0).
+     * arguments such as Vector x = new Vector(1.0, 2.0, 3.0, 4.0).
      *
      * @param a the array or vararg list
      */
     public Vector(double ... a) {
         d = a.length;
 
-        // defensive copy so that client can't alter our copy of data[]
         data = new double[d];
         for (int i = 0; i < d; i++)
             data[i] = a[i];
@@ -56,7 +47,7 @@ public class Vector {
         if (this.d != that.d) throw new IllegalArgumentException("Dimensions don't match");
         double sum = 0.0;
         for (int i = 0; i < this.d ; i++) {
-            sum = sum + ((that.data[i] - this.data[i]) * (that.data[i] - this.data[i]));
+            sum = sum + (Math.pow((that.data[i] - this.data[i]), 2));
         }
         return Math.sqrt(sum);
     }
@@ -80,24 +71,16 @@ public class Vector {
         long n = 26_556_000L;
         int m = 10;
         MinPQ<Vector> vectorPQ = new MinPQ<>(10, new SortByDistance());
-        //Vector[] vn = new Vector[n];
+
         for (int i = 0; i < n ; i++) {
             Vector v = new Vector(StdRandom.uniform(-1000.0, 1000.0),
                                   StdRandom.uniform(-1000.0, 1000.0),
                                   StdRandom.uniform(-1000.0, 1000.0),
                                   StdRandom.uniform(-1000.0, 1000.0));
             vectorPQ.insert(v);
-           // System.out.println(v.distanceTo(v1));
         }
-        double[] lol = {0.0,0.1,0.2,0.3};
-        Vector bla = new Vector(lol);
-        System.out.println(bla.toString());
 
-//
-//        Vector v1 = new Vector(1.0, 32.0283, 4234, 234.234);
-//        Vector v2 = new Vector(3.0, 3.232, 234234.324, 43274.98);
-//        Vector v3 = new Vector(641.0, 2233.232, 2374, 49023.98);
-//        Vector v4 = new Vector(3562.0283, 283.23223, 987.3874893, 387493.9304729);
+
 
         System.out.println("=================================");
 

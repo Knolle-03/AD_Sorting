@@ -39,7 +39,7 @@ import edu.princeton.cs.algs4.StdOut;
  */
 public class MergeBU {
 
-    static long arrayAccesses;
+    static long arrayAccesses = 0;
 
     // This class should not be instantiated.
     private MergeBU() { }
