@@ -240,11 +240,26 @@ public class MinMaxHeap<T extends Comparable<T>> {
         }
     }
 
+
+
+    /**
+     * swaps two elements in the heap by index.
+     * @param a the array to be sorted
+     * @param i index of the first element
+     * @param j index of the second element
+     */
     private void swap(T[] a, int i, int j ){
         T tmp = a[i];
         a[i] = a[j];
         a[j] = tmp;
     }
+
+
+    /**
+     * Returns the indices of i's children.
+     * @param i index of the parent node of the returned children's indices.
+     * @return an ArrayList of indices which could be empty if there are non.
+     */
 
 
     private ArrayList<Integer> indexOfChildren(int i){
@@ -261,6 +276,12 @@ public class MinMaxHeap<T extends Comparable<T>> {
         }
     }
 
+
+    /**
+     * calculates the index of the last descendant of a given node
+     * @param i index of parent/grandparent node
+     * @return index of the last descendant of a given node with index i
+     */
     private int lastDesc(int i) {
 
         return i*4+3 < heap.length ? i*4+3 : heap.length;
@@ -281,6 +302,12 @@ public class MinMaxHeap<T extends Comparable<T>> {
         return smallest;
     }
 
+
+    /**
+     * Returns index of largest child or grandchild, 0 if none exist.
+     * @param i index of base node, i.e. (grand)parent
+     * @return index of largest child or grandchild, 0 if none exist.
+     */
     private int indexOfLargestDescendant(int i){
         if (i*2 > heap.length + 1) return 0;
         int smallest = i*2;
@@ -291,23 +318,46 @@ public class MinMaxHeap<T extends Comparable<T>> {
     }
 
 
-
+    /**
+     * Checks if there are children to a given node.
+     * @param i index of base node, i.e. parent
+     * @return true if there is at least one child and false if there are non.
+     */
     private boolean iHasChildren(int i){
         return indexOfChildren(i).size() > 0;
     }
 
+
+    /**
+     * Return the index of the parent node to a given index.
+     * @param i index of base node, i.e. child
+     * @return index of the corresponding parent node to a given node.
+     */
     private int parent (int i){
          return i/2;
     }
-
+    /**
+     * Checks if a given node is on a min level.
+     * @param i index of a given node
+     * @return true if node is on a min level.
+     */
     private boolean isMinLevel(int i){
         return log2(i) % 2 == 0;
     }
-
+    /**
+     * Checks if a given node is on a max level.
+     * @param i index of a given node
+     * @return true if node is on a max level.
+     */
     private boolean isMaxLevel(int i){
         return !isMinLevel(i);
     }
 
+    /**
+     * Used to calculate levels of nodes.
+     * @param x index of a given node.
+     * @return odd value if heap[x] is on a max level and even value if heap[x] is on a min level.
+     */
     private static int log2(int x){
         return (int) (log(x) / log(2));
     }
