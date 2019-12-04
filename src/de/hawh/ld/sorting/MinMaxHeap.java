@@ -5,6 +5,7 @@ import edu.princeton.cs.algs4.StdRandom;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import static java.lang.Math.*;
 
 public class MinMaxHeap<T extends Comparable<T>> {
@@ -15,6 +16,7 @@ public class MinMaxHeap<T extends Comparable<T>> {
     public MinMaxHeap(T[] h){
         heap = (T[]) new Comparable [h.length + 1];
         System.arraycopy(h, 0, heap, 1, h.length);
+        System.out.println(Arrays.toString(heap));
         for (int i = (heap.length/2); i > 0 ; i--) {
             pushDown(heap, i);
         }
@@ -62,14 +64,18 @@ public class MinMaxHeap<T extends Comparable<T>> {
             heap[size + 1] = element;
             size++;
             pushUp(heap, size);
+            pushUp(heap, size);
         }
     }
+
+
 
     /**
      * Removes the minimum in log(n) time.
      * @return the smallest element of the heap.
      */
     public T removeMin(){
+        if(heap.length > size/4) resize(-1);
         T retVal = heap[1];
         heap[1] = heap[size + 1];
         heap[size + 1] = null;
@@ -77,6 +83,7 @@ public class MinMaxHeap<T extends Comparable<T>> {
         size--;
         return retVal;
     }
+
 
     /**
      * Removes the maximum in log(n) time.
@@ -122,42 +129,6 @@ public class MinMaxHeap<T extends Comparable<T>> {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     private void pushDown(T[] h, int i){
         if (isMinLevel(i)){
             pushDownMin(h, i);
@@ -186,6 +157,7 @@ public class MinMaxHeap<T extends Comparable<T>> {
     }
 
     public void pushDownMax(T[] h, int i){
+        int largest = indexOfLargestDescendant(i);
         if (iHasChildren(i)){
             int m = indexOfLargestDescendant(i);
             if (m > 2 * i + 1){
@@ -321,7 +293,8 @@ public class MinMaxHeap<T extends Comparable<T>> {
      * @return true if there is at least one child and false if there are non.
      */
     private boolean iHasChildren(int i){
-        return indexOfChildren(i).size() > 0;
+//        return indexOfChildren(i).size() > 0;
+        return i*2 < heap.length;
     }
 
 
@@ -360,11 +333,32 @@ public class MinMaxHeap<T extends Comparable<T>> {
     }
 
 
-
-
     @Override
     public String toString() {
         return Arrays.toString(heap);
+    }
+
+    public String tree() {
+        int max = log2(heap.length);
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i <= log2(heap.length) ; i++) {
+            for (int k = i; k <= max; k++) {
+                sb.append("   ");
+            }
+            for (int j = (int) Math.pow(2,i); j < lastInRow(i); j++) {
+                sb.append(heap[j].toString());
+                for (int k = i; k <= max; k++) {
+                    sb.append("  ");
+                }
+            }
+            sb.append(System.lineSeparator());
+        }
+        return sb.toString();
+    }
+
+    private int lastInRow(int i) {
+        int max = (int) Math.pow(2,i+1);
+        return (max < heap.length) ? max : heap.length - 1;
     }
 
     public static void main(String[] args) {
