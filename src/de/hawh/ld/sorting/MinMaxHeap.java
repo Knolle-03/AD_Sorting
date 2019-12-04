@@ -1,9 +1,10 @@
 package de.hawh.ld.sorting;
 
 
+import edu.princeton.cs.algs4.StdRandom;
+
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import static java.lang.Math.*;
 
 public class MinMaxHeap<T extends Comparable<T>> {
@@ -14,7 +15,6 @@ public class MinMaxHeap<T extends Comparable<T>> {
     public MinMaxHeap(T[] h){
         heap = (T[]) new Comparable [h.length + 1];
         System.arraycopy(h, 0, heap, 1, h.length);
-//        System.out.println(Arrays.toString(heap));
         for (int i = (heap.length/2); i > 0 ; i--) {
             pushDown(heap, i);
         }
@@ -32,8 +32,10 @@ public class MinMaxHeap<T extends Comparable<T>> {
      * Returns the minimum of the heap in constant time.
      * @return minimum of the heap.
      */
-    public T findMin(){
-        return heap[1];
+    public T[] findMin(){
+        T[] copy = (T[]) new Comparable[1];
+        System.arraycopy(heap, 1,copy, 0, 1);
+        return copy ;
     }
 
 
@@ -42,9 +44,9 @@ public class MinMaxHeap<T extends Comparable<T>> {
      * @return maximum of the heap.
      */
     public T findMax(){
-       if (heap.length < 2) return null;
-       if (heap.length == 2) return heap[1];
-       if (heap.length == 3) return heap[2];
+       if (size < 1) return null;
+       if (size == 1) return heap[1];
+       if (size == 2) return heap[2];
        else {
           return (heap[2].compareTo(heap[3]) < 0) ? heap[2] : heap[3];
        }
@@ -56,26 +58,18 @@ public class MinMaxHeap<T extends Comparable<T>> {
      * @param element that is to be inserted
      */
     public void insert(T element){
-        if (heap.length < size + 1) resize(1);
-        if (size == 0){
-            heap[1] = element;
-            size++;
-        } else {
+        if (heap.length > size){
             heap[size + 1] = element;
             size++;
-            pushUp(heap, size);
             pushUp(heap, size);
         }
     }
 
-
-
     /**
-     * Returns the minimum in log(n) time.
+     * Removes the minimum in log(n) time.
      * @return the smallest element of the heap.
      */
     public T removeMin(){
-        if(heap.length > size/4) resize(-1);
         T retVal = heap[1];
         heap[1] = heap[size + 1];
         heap[size + 1] = null;
@@ -84,12 +78,15 @@ public class MinMaxHeap<T extends Comparable<T>> {
         return retVal;
     }
 
-
     /**
-     * Returns the maximum in log(n) time.
+     * Removes the maximum in log(n) time.
      * @return the largest element of the heap.
      */
     public T removeMax(){
+        if (size < 1) return null;
+        if (size == 1 ){
+            T retVal = heap[1];
+        }
         T retVal = findMax();
         if (heap[2].equals(findMax())) {
             heap[2] = heap[size + 1];
@@ -172,35 +169,35 @@ public class MinMaxHeap<T extends Comparable<T>> {
 
 
     public void pushDownMin(T[] h, int i ){
-        int smallest = indexOfSmallestDescendant(i);
         if (iHasChildren(i)){
-            if (smallest > 2 * i + 1){
-                if (h[smallest].compareTo(h[i]) < 0){
-                    swap(h, smallest, i);
-                    if (h[smallest].compareTo(h[parent(smallest)]) > 0){
-                        swap(h, smallest, parent(smallest));
+            int m = indexOfSmallestDescendant(i);
+            if (m > 2 * i + 1){
+                if (h[m].compareTo(h[i]) < 0){
+                    swap(h, m, i);
+                    if (h[m].compareTo(h[parent(m)]) > 0){
+                        swap(h, m, parent(m));
                     }
-                    pushDownMin(h, smallest);
+                    pushDownMin(h, m);
                 }
-            } else if (h[smallest].compareTo(h[i]) > 0){
-                swap(h, smallest, i);
+            } else if (h[m].compareTo(h[i]) < 0){
+                swap(h, m, i);
             }
         }
     }
 
     public void pushDownMax(T[] h, int i){
-        int largest = indexOfLargestDescendant(i);
         if (iHasChildren(i)){
-            if (largest > 2 * i + 1){
-                if (h[largest].compareTo(h[i]) > 0){
-                    swap(h, largest, i);
-                    if (h[largest].compareTo(h[parent(largest)]) < 0){
-                        swap(h, largest, parent(largest) );
+            int m = indexOfLargestDescendant(i);
+            if (m > 2 * i + 1){
+                if (h[m].compareTo(h[i]) > 0){
+                    swap(h, m, i);
+                    if (h[m].compareTo(h[parent(m)]) < 0){
+                        swap(h, m, parent(m) );
                     }
-                    pushDownMax(h, largest);
+                    pushDownMax(h, m);
                 }
-            } else if (h[largest].compareTo(h[parent(largest)]) > 0){
-                swap(h, largest, i);
+            } else if (h[m].compareTo(h[i]) > 0){
+                swap(h, m, i);
             }
         }
     }
@@ -264,11 +261,11 @@ public class MinMaxHeap<T extends Comparable<T>> {
 
     private ArrayList<Integer> indexOfChildren(int i){
         ArrayList<Integer> indexOfChildren = new ArrayList<>();
-        if (i * 2 + 1 <= heap.length + 1){
+        if (i * 2 + 1 < heap.length){
             indexOfChildren.add(i * 2);
             indexOfChildren.add(i * 2 + 1);
             return indexOfChildren;
-        } else if (i * 2 <= heap.length + 1){
+        } else if (i * 2 < heap.length){
             indexOfChildren.add(i * 2);
             return indexOfChildren;
         } else {
@@ -294,7 +291,7 @@ public class MinMaxHeap<T extends Comparable<T>> {
      */
 
     private int indexOfSmallestDescendant(int i){
-        if (i*2 > heap.length + 1) return 0;
+        if (i*2 >= heap.length) return 0;
         int smallest = i*2;
         for (int j = i*2+1; j < lastDesc(i); j++) {
             if (heap[j].compareTo(heap[smallest]) < 0) smallest = j;
@@ -309,7 +306,7 @@ public class MinMaxHeap<T extends Comparable<T>> {
      * @return index of largest child or grandchild, 0 if none exist.
      */
     private int indexOfLargestDescendant(int i){
-        if (i*2 > heap.length + 1) return 0;
+        if (i*2 >= heap.length) return 0;
         int smallest = i*2;
         for (int j = i*2+1; j < lastDesc(i); j++) {
             if (heap[j].compareTo(heap[smallest]) > 0) smallest = j;
@@ -363,24 +360,44 @@ public class MinMaxHeap<T extends Comparable<T>> {
     }
 
 
+
+
     @Override
     public String toString() {
         return Arrays.toString(heap);
     }
 
     public static void main(String[] args) {
-
-//        MinMaxHeap<Integer> mmh = new MinMaxHeap<>(10);
-//        System.out.println(Collections.singletonList(mmh));
-//
-//        for (int i = 0; i < 10 ; i++) {
-//            mmh.insert(i);
-//            System.out.println(mmh);
-//            System.out.println(i + ": " + mmh.isMinLevel(i));
-//        }
-
-        MinMaxHeap<Integer> mmh = new MinMaxHeap<>(new Integer[]{1,2,3,4,5,6});
+        MinMaxHeap<Integer> mmh = new MinMaxHeap<>(12);
+        Integer[] intArr = {13, 21, 31, 51, 46, 16, 11, 10, 31, 41, 71, 8};
+        for (int i = 0; i < intArr.length ; i++) {
+            mmh.insert(intArr[i]);
+        }
         System.out.println(mmh);
+        int j = 20;
+        Integer[] intArr2 = new Integer[j];
+        for (int i = 0; i < j ; i++) {
+            intArr2[i] = StdRandom.uniform(0,1000);
+        }
+        System.out.println(Arrays.toString(intArr2));
+        MinMaxHeap<Integer> mmh2 = new MinMaxHeap<>(intArr2);
+        System.out.println(mmh2);
+//
+//        ArrayList<Integer> even = new ArrayList<>();
+//        ArrayList<Integer> odd  = new ArrayList<>();
+//
+//
+//        for (int i = 1; i < j ; i++) {
+//            if (i % 2 != 0){
+//                even.add(mmh2.removeMin());
+//            } else {
+//                odd.add(mmh2.removeMax());
+//            }
+//        }
+//
+//
+//        System.out.println(even);
+//        System.out.println(odd);
     }
 
 

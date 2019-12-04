@@ -105,9 +105,7 @@ public class Tree<Key extends Comparable<Key>, Value> extends BST<Key, Value> {
      ***************************************************************************/
     private boolean check() {
         if (!isBST())            StdOut.println("Not in symmetric order");
-        if (!isSizeConsistent()) StdOut.println("Subtree counts not consistent");
-        if (!isRankConsistent()) StdOut.println("Ranks not consistent");
-        return isBST() && isSizeConsistent() && isRankConsistent();
+        return isBST();
     }
 
     // does this binary tree satisfy symmetric order?
@@ -126,22 +124,6 @@ public class Tree<Key extends Comparable<Key>, Value> extends BST<Key, Value> {
         return isBST(x.left, min, x.key) && isBST(x.right, x.key, max);
     }
 
-    // are the size fields correct?
-    private boolean isSizeConsistent() { return isSizeConsistent(root); }
-    private boolean isSizeConsistent(Node x) {
-        if (x == null) return true;
-        if (x.size != size(x.left) + size(x.right) + 1) return false;
-        return isSizeConsistent(x.left) && isSizeConsistent(x.right);
-    }
-
-    // check that ranks are consistent
-    private boolean isRankConsistent() {
-        for (int i = 0; i < size(); i++)
-            if (i != rank(select(i))) return false;
-        for (Key key : keys())
-            if (key.compareTo(select(rank(key))) != 0) return false;
-        return true;
-    }
 
     public static void main(String[] args) {
         BST<Integer, String> test1 = new BST<>();
