@@ -356,6 +356,20 @@ public class MinMaxHeap<T extends Comparable<T>> {
         return sb.toString();
     }
 
+    private int[] childrenOf(int i) {
+        if (i*2+1 < heap.length)    return new int[]{i*2, i*2+1};
+        else if (i*2 < heap.length) return new int[]{i*2};
+        else                        return new int[]{};
+    }
+
+    private int[] grandchildrenOf(int i) {
+        if (i*4+3 < heap.length)    return new int[]{i*4, i*4+1, i*4+2, i*4+3};
+        if (i*4+2 < heap.length)    return new int[]{i*4, i*4+1, i*4+2};
+        if (i*4+1 < heap.length)    return new int[]{i*4, i*4+1};
+        else if (i*4 < heap.length) return new int[]{i*4};
+        else                        return new int[]{};
+    }
+
     private int lastInRow(int i) {
         int max = (int) Math.pow(2,i+1);
         return (max < heap.length) ? max : heap.length - 1;
