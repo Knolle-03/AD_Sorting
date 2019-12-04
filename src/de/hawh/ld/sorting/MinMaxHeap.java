@@ -14,7 +14,7 @@ public class MinMaxHeap<T extends Comparable<T>> {
     public MinMaxHeap(T[] h){
         heap = (T[]) new Comparable [h.length + 1];
         System.arraycopy(h, 0, heap, 1, h.length);
-        System.out.println(Arrays.toString(heap));
+//        System.out.println(Arrays.toString(heap));
         for (int i = (heap.length/2); i > 0 ; i--) {
             pushDown(heap, i);
         }
@@ -296,7 +296,7 @@ public class MinMaxHeap<T extends Comparable<T>> {
     private int indexOfSmallestDescendant(int i){
         if (i*2 > heap.length + 1) return 0;
         int smallest = i*2;
-        for (int j = i*2+1; j <= lastDesc(i); j++) {
+        for (int j = i*2+1; j < lastDesc(i); j++) {
             if (heap[j].compareTo(heap[smallest]) < 0) smallest = j;
         }
         return smallest;
@@ -311,7 +311,7 @@ public class MinMaxHeap<T extends Comparable<T>> {
     private int indexOfLargestDescendant(int i){
         if (i*2 > heap.length + 1) return 0;
         int smallest = i*2;
-        for (int j = i*2+1; j <= lastDesc(i); j++) {
+        for (int j = i*2+1; j < lastDesc(i); j++) {
             if (heap[j].compareTo(heap[smallest]) > 0) smallest = j;
         }
         return smallest;
@@ -370,14 +370,17 @@ public class MinMaxHeap<T extends Comparable<T>> {
 
     public static void main(String[] args) {
 
-        MinMaxHeap<Integer> mmh = new MinMaxHeap<>(10);
-        System.out.println(Collections.singletonList(mmh));
+//        MinMaxHeap<Integer> mmh = new MinMaxHeap<>(10);
+//        System.out.println(Collections.singletonList(mmh));
+//
+//        for (int i = 0; i < 10 ; i++) {
+//            mmh.insert(i);
+//            System.out.println(mmh);
+//            System.out.println(i + ": " + mmh.isMinLevel(i));
+//        }
 
-        for (int i = 0; i < 10 ; i++) {
-            mmh.insert(i);
-            System.out.println(mmh);
-            System.out.println(i + ": " + mmh.isMinLevel(i));
-        }
+        MinMaxHeap<Integer> mmh = new MinMaxHeap<>(new Integer[]{1,2,3,4,5,6});
+        System.out.println(mmh);
     }
 
 
